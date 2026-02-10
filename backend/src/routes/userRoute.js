@@ -15,6 +15,6 @@ userRouter.get('/courses', controller.viewCourses);
 // // all the fallowing will have to require the userAuth
 
 userRouter.post('/course/buy/:courseId',userAuth, controller.buyCourse);
-// userRouter.get('/myCourses',userAuth, userPurchasedCourses)
+ userRouter.get('/myCourses',userAuth, controller.myCourses)
 
 export default userRouter;

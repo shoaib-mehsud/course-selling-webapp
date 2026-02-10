@@ -11,6 +11,7 @@ const purchasedSchema = new Schema({
     paymentReference:{type: String, unique: true},
     payment:{type:Number}
 })
-
+// create a constraint that a user can buy a course only once
+purchasedSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 const purchasedModel = mongoose.model('purchases',purchasedSchema);
 export default purchasedModel;

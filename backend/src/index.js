@@ -5,7 +5,8 @@ import userRouter from './routes/userRoute.js';
 import adminRouter from './routes/adminRoute.js';
 const app = express();
 
-console.log("Checking MONGO_URL:", process.env.MONGO_URL); // Debug line
+console.log("Checking MONGO_URL");
+ process.env.MONGO_URL 
 async function DBconneciton(){
    try{ await mongoose.connect(process.env.MONGO_URL)
     console.log("Database connected successfully")   

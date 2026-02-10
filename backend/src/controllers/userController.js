@@ -74,3 +74,24 @@ export const buyCourse = async (req,res)=>{
     }
 }
 
+export const myCourses = async (req,res) =>{
+    try {
+        const userId = req.userid;
+        const purchasedCourses = await userLogic.userCourses({userId});
+       if(!purchasedCourses){
+        return res.json({
+            message: "You donot have purchased any course yet"
+        })
+       } 
+
+       res.json({
+            message: "Your courses",
+            purchasedCourses
+        })
+    } catch (e) {
+        res.json({
+            error: e.message
+        })
+    }
+}
+

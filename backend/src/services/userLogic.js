@@ -48,9 +48,17 @@ export async function viewCourses() {
         const courseBought = await purchasedModel.create({
             userId,
             courseId,
-            paymentRef,
+            paymentReference: paymentRef,
             payment
         });
         return courseBought;
  }
 
+export async function userCourses({userId}){
+    const purchasedCourses = await purchasedModel.find({userId});
+    const courseIds = purchasedCourses.map(record => record.courseId);
+    const courses = await courseModel.find({
+        _id: {$in: courseIds}
+    })
+     return courses;
+}

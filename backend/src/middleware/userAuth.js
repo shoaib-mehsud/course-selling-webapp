@@ -1,20 +1,26 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-const adminSecert = process.env.adminJWT;
+const userSecert = process.env.userJWT;
 
 function userAuthMiddleware(req,res,next){
-    const userId = req.body.userId;
-    const token = req.get('authToken');
+    const token = req.get('Authorization');
     
     if(!token) return res.status(401).json({
         message: "token not found"
     });
 
     try{
-        const decoded = jwt.verify(token,adminSecert);
+        const decoded = jwt.verify(token,userSecert);
+        if(decoded){
+            req.userid = decoded.id
+        }
         next();
     }
     catch(e){
-        
+        res.status(403).json({
+            message: "invalid token"
+        })
     }
 }
+
+export default userAuthMiddleware;

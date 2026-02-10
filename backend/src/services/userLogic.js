@@ -3,6 +3,8 @@ import UserModel from "../models/userDB.js";
 import bcrypt from 'bcrypt';
 
 import jwt from 'jsonwebtoken';
+import courseModel from "../models/coursesDB.js"; 
+import purchasedModel from "../models/purchasesDB.js";
 
 export async function signupUser(userData) {
           const firstName = userData.firstName;
@@ -32,6 +34,23 @@ export async function signinUser({email,password}) {
       return token;
     }
 
-
 }
+
+export async function viewCourses() {
+    const courses = await courseModel.find({});
+    if(!courses){
+        console.log("courses doesnot exist");
+        
+    }return courses;
+}
+
+ export async function buyCourse({userId,courseId,paymentRef,payment}){
+        const courseBought = await purchasedModel.create({
+            userId,
+            courseId,
+            paymentRef,
+            payment
+        });
+        return courseBought;
+ }
 

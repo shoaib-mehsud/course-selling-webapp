@@ -37,5 +37,40 @@ export const signinController = async (req,res) => {
         })
     }
 }
+export const viewCourses = async (req,res)=>{
+    try{
+        const viewCourses = await userLogic.viewCourses();
+        res.json({
+            courses: viewCourses
+        });
+       
+    }
+     catch(e){
+            res.json({
+                message: e.error
+            })
+        }
+}
 
+export const buyCourse = async (req,res)=>{
+    try {
+        console.log("in -------> userCOntroller before");//for beugging
+        const courseId= req.params.courseId;
+        const userId = req.userid;
+        const paymentRef = req.body.paymentReference;
+        const payment = req.body.payment;
+          console.log("in -------> userCOntroller after")//for beugging
+        const courseToBuy = await userLogic.buyCourse({userId,courseId,paymentRef,payment});
+      
+
+        res.json({
+            message: "Course bought successfully",
+            course: courseToBuy
+        })
+    } catch (e) {
+        res.json({
+            error: e.message
+        })
+    }
+}
 

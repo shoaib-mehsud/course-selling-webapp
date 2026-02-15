@@ -24,7 +24,6 @@ export const signinAdmin = async (req,res) => {
         const {email,password} = req.body;
         const adminToSignin = await adminLogic.signinAdmin({email,password});
         res.json({
-            message: "admin logged in successfully",
             Authorization: adminToSignin
         });
     } catch (e) {
@@ -48,5 +47,55 @@ export const createCourse = async (req,res)=> {
     } catch (e) {
         res.json({ error: e.message
 }) 
+    }
+}
+
+export const updateCourse = async (req,res)=>{
+    try{
+        const courseId = req.params.courseId;
+        const allowedFields = ["title", "description", "price", "thumbnail"];
+        const updateFields = {};
+        Object.keys(req.body).forEach((key)=>{
+            if(allowedFields.includes(key)){
+                updateFields[key] = req.body[key];
+            }
+        });
+
+        const updateCourse = await adminLogic.updateCourse(courseId,updateFields)
+        res.json({
+            message: "course updated successfully",
+            course: updateCourse
+        })
+    }catch(e){
+        res.json({
+            error: e.message
+        })
+    }
+}
+
+export const deleteCourse = async(req,res)=>{
+    try {
+         const courseId = req.params.courseId;
+         const deleteCou = await adminLogic.deleteCourseLogic(courseId)
+         res.json({
+            message: deleteCou.title + " has deleted successfully"
+         })
+    } catch (e) {
+        res.json({
+            error: e.message
+        })
+    }
+}
+
+export const viewAdminCourses = async (req,res)=>{
+    try {
+        console.log("Here in the admincontroller the userId: "+req.userid);
+        const adminId = req.userid;
+        const adminCourses = await adminLogic.viewACourses(adminId);
+        res.json({
+           " your courses": adminCourses
+        })
+    } catch (e) {
+        error: e.message
     }
 }

@@ -11,8 +11,8 @@ adminRouter.post('/signin', adminControl.signinAdmin);
 // all the fallowing will have to require the adminAuth
 
 adminRouter.post('/course',adminAuth,adminControl.createCourse);
-// adminRouter.put('/course/:courseId',adminAuth,updateCourse);
-// adminRouter.delete('/course/:courseId',adminAuth, deleteCourse);
-// adminRouter.get('/courses',adminAuth, viewCourses);
+adminRouter.patch('/course/:courseId',adminAuth,adminControl.updateCourse);
+adminRouter.delete('/course/:courseId',adminAuth, adminControl.deleteCourse);
+adminRouter.get('/courses',adminAuth, adminControl.viewAdminCourses);
 
 export default adminRouter;
